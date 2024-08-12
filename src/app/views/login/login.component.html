@@ -15,7 +15,7 @@
         <input matInput formControlName="password" placeholder="Ingrese su contraseña" type="password">
       </mat-form-field>
 
-      <button mat-raised-button color="primary" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+      <button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
     </form>
   </mat-card-content>
 </mat-card>
