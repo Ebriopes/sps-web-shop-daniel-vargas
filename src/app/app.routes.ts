@@ -9,5 +9,12 @@ export const routes: Routes = [
         (m) => m.LoginComponent
       ),
   },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('src/app/views/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
+  },
   { path: '**', redirectTo: 'login' },
 ];
