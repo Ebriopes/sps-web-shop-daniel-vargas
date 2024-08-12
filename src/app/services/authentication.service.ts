@@ -51,4 +51,12 @@ export class AuthenticationService {
     // Redirigir al usuario a la página de inicio de sesión
     this.isAuthenticatedSubject.next(false);
   }
+
+  checkPreviousSession() {
+    const token = sessionStorage.getItem('token');
+
+    if (token) {
+      this.isAuthenticatedSubject.next(true);
+    }
+  }
 }
