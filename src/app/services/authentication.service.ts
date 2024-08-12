@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+
 import { ICredentials, ILogData } from '@models/credentials.model';
 import { IUser } from '@models/user.model';
-
-import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +26,22 @@ export class AuthenticationService {
   login(credentials: ICredentials): Observable<string> {
     return this.http.post<any>(`${this.baseUrl}/auth/login`, credentials).pipe(
       map((response) => {
+        if (response?.token) {
         this.isAuthenticatedSubject.next(true);
 
-        return response;
+        sessionStorage.setItem('token', response.token);
+
+        return response.token;
+        }
+
+        this.isAuthenticatedSubject.next(false);
+      }),
+      catchError((error) => {
+        this.isAuthenticatedSubject.next(false);
+
+        console.error('Login error:', error);
+
+        return throwError(() => new Error(`Login error: ${error}`));
       })
     );
   }
