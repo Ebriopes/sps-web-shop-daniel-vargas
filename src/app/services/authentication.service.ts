@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
@@ -27,21 +27,21 @@ export class AuthenticationService {
     return this.http.post<any>(`${this.baseUrl}/auth/login`, credentials).pipe(
       map((response) => {
         if (response?.token) {
-        this.isAuthenticatedSubject.next(true);
+          this.isAuthenticatedSubject.next(true);
 
-        sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('token', response.token);
 
-        return response.token;
+          return response.token;
         }
 
         this.isAuthenticatedSubject.next(false);
       }),
-      catchError((error) => {
+      catchError((httpError: HttpErrorResponse) => {
         this.isAuthenticatedSubject.next(false);
 
-        console.error('Login error:', error);
+        console.error('Login error:', httpError.error);
 
-        return throwError(() => new Error(`Login error: ${error}`));
+        return throwError(() => new Error(`Login error: ${httpError.error}`));
       })
     );
   }
