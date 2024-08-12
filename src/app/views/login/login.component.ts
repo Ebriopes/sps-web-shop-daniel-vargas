@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ICredentials } from '@models/credentials.model';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class LoginComponent {
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 
@@ -37,6 +38,8 @@ export class LoginComponent {
   ) {}
 
   login() {
-    this.authService.login();
+    const loginCredentials: ICredentials = this.loginForm.value;
+
+    this.authService.login(loginCredentials).subscribe(console.log);
   }
 }
