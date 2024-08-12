@@ -1,27 +1,37 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideHttpClient } from '@angular/common/http';
+import { AuthenticationService } from './services/authentication.service';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [AppComponent]
-  }));
+  let authService: AuthenticationService;
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [AppComponent],
+      providers: [provideHttpClient()],
+    }).compileComponents();
+
+    authService = TestBed.inject(AuthenticationService);
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+  });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it(`should have the 'eagle-wear' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app.title).toEqual('eagle-wear');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('eagle-wear app is running!');
+  it('test ngOnInit should call checkPreviusSession method', () => {
+    const spyAuthCheck = spyOn(authService, 'checkPreviousSession');
+
+    app.ngOnInit();
+
+    expect(spyAuthCheck).toHaveBeenCalled();
   });
 });
