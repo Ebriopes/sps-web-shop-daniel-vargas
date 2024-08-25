@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -21,7 +20,13 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
-      "@models/*": ["src/app/common/models/*"]
+      "@components/*": ["src/app/common/components/*"],
+      "@constants/*": ["src/app/common/constants/*"],
+      "@directives/*": ["src/app/common/directives/*"],
+      "@guards/*": ["src/app/common/guards/*"],
+      "@models/*": ["src/app/common/models/*"],
+      "@services/*": ["src/app/common/services/*"],
+      "@views/*": ["src/app/views/*"]
     }
   },
   "angularCompilerOptions": {

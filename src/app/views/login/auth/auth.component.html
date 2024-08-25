@@ -1,0 +1,52 @@
+<form [formGroup]="authForm" class="login-form">
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>Correo electrónico</mat-label>
+    <input
+      matInput
+      formControlName="username"
+      placeholder="Ingresa tu correo electrónico"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>Contraseña</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      placeholder="Ingresa tu contraseña"
+      [type]="showPassword ? 'text' : 'password'"
+    />
+
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="togglePasswordVisibility()"
+    >
+      <mat-icon>
+        {{ showPassword ? "visibility_off" : "visibility" }}
+      </mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button
+    class="py-4"
+    mat-raised-button
+    color="primary"
+    [disabled]="authForm.invalid"
+    (click)="login()"
+  >
+    Iniciar Sesión
+  </button>
+
+  <span>
+    ¿No tienes cuenta aún?
+    <a
+      class="sign-up-redirect"
+      [routerLink]="['/login/register']"
+      routerLinkActive="router-link-active"
+    >
+      Regístrate ahora
+    </a>
+  </span>
+</form>

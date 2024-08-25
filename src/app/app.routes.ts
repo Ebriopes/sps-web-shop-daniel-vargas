@@ -9,6 +9,31 @@ export const routes: Routes = [
       import('src/app/views/login/login.component').then(
         (m) => m.LoginComponent
       ),
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'auth' },
+      {
+        path: 'auth',
+        loadComponent: () =>
+          import('src/app/views/login/auth/auth.component').then(
+            (m) => m.AuthComponent
+          ),
+        title: 'Inicio de sesión',
+        data: {
+          cardTitle: 'Ingresa con tu cuenta ',
+        },
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('src/app/views/login/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
+        title: 'Registro',
+        data: {
+          cardTitle: 'Crea una cuenta',
+        },
+      },
+    ],
   },
   {
     path: 'home',

@@ -1,0 +1,19 @@
+<h1 *ngIf="data.title" class="text-center" mat-dialog-title>
+  {{ data.title }}
+</h1>
+
+<mat-dialog-content class="d-flex justify-content-center align-items-center">
+  <span class="text-center">{{ data.message }}</span>
+</mat-dialog-content>
+
+<mat-dialog-actions class="justify-content-center">
+  <button
+    mat-raised-button
+    mat-dialog-close
+    color="primary"
+    class="notify-button"
+    type="button"
+  >
+    Aceptar
+  </button>
+</mat-dialog-actions>

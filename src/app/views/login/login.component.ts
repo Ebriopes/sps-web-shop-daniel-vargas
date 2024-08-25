@@ -1,45 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ICredentials } from '@models/credentials.model';
 
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatInputModule,
-    MatButtonModule,
-  ],
+  imports: [CommonModule, MatCardModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  loginForm: FormGroup = this.fb.group({
-    username: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-  });
+export class LoginComponent implements OnInit, OnDestroy {
+  private readonly unsubscribe = new Subject<void>();
+
+  cardTitle: string = 'Inicio';
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly authService: AuthenticationService
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {}
 
-  login() {
-    const loginCredentials: ICredentials = this.loginForm.value;
+  ngOnInit(): void {
+    this.cardTitle =
+      this.route.snapshot.firstChild?.data['cardTitle'] ?? this.cardTitle;
 
-    this.authService.login(loginCredentials).subscribe(console.log);
+    this.router.events.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
+      this.cardTitle = this.route.snapshot.firstChild?.data['cardTitle'];
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

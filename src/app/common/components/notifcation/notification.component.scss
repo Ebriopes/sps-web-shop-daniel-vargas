@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-width: 250px;
+  min-height: 250px;
+}
+
+.notify-button {
+  width: 10rem;
+  padding-block: 1rem;
+}

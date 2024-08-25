@@ -1,0 +1,104 @@
+<form [formGroup]="registerForm" class="login-form">
+  <mat-form-field
+    appearance="outline"
+    floatLabel="always"
+    subscriptSizing="dynamic"
+  >
+    <mat-label>Usuario</mat-label>
+    <input
+      matInput
+      formControlName="username"
+      placeholder="Escoge un usuario"
+    />
+    <mat-error dynamicErrors></mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    appearance="outline"
+    floatLabel="always"
+    subscriptSizing="dynamic"
+  >
+    <mat-label>Correo electrónico</mat-label>
+    <input
+      matInput
+      formControlName="email"
+      placeholder="Ingresa tu correo electrónico"
+    />
+    <mat-error dynamicErrors></mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    appearance="outline"
+    floatLabel="always"
+    subscriptSizing="dynamic"
+  >
+    <mat-label>Contraseña</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      placeholder="Elige una contraseña"
+      [type]="showPassword ? 'text' : 'password'"
+    />
+
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="togglePasswordVisibility()"
+    >
+      <mat-icon>
+        {{ showPassword ? "visibility_off" : "visibility" }}
+      </mat-icon>
+    </button>
+    <mat-error dynamicErrors></mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="passwordControl.valid"
+    appearance="outline"
+    floatLabel="always"
+    subscriptSizing="dynamic"
+  >
+    <mat-label>Confirmar contraseña</mat-label>
+    <input
+      matInput
+      formControlName="passwordValidation"
+      placeholder="Repite la misma contraseña"
+      [type]="showConfirmPass ? 'text' : 'password'"
+    />
+
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="toggleConfirmPassVisibility()"
+    >
+      <mat-icon>
+        {{ showConfirmPass ? "visibility_off" : "visibility" }}
+      </mat-icon>
+    </button>
+    <mat-error dynamicErrors></mat-error>
+  </mat-form-field>
+
+  <section class="d-flex flex-column row-gap-2">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="register()"
+      [disabled]="registerForm.invalid"
+    >
+      Registrar
+    </button>
+
+    <span class="my'3">
+      ¿Ya tienes una cuenta?
+      <a
+        class="sign-in-redirect"
+        routerLinkActive="router-link-active"
+        [routerLink]="['/login/auth']"
+      >
+        Inicia sesión
+      </a>
+    </span>
+  </section>
+</form>

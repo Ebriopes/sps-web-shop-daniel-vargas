@@ -3,9 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
+.log-card {
+  min-width: 350px;
 }
